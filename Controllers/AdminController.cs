@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,20 +8,32 @@ using FujiwaraCarShop.Models;
 
 namespace FujiwaraCarShop.Controllers
 {
-    public class VehiclesController : Controller
+    public class AdminController : Controller
     {
         private readonly FujiwaraCarShopContext _context;
 
-        public VehiclesController(FujiwaraCarShopContext context)
+        public AdminController(FujiwaraCarShopContext context)
         {
             _context = context;
         }
+        public IActionResult Login() {
+            return View("~/Views/Admin/Login.cshtml");
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login([Bind("Login,Password")] User user) {
+            if (user.Login == "Dacioso" && user.Password == "123") {
+                return RedirectToAction(nameof(Index));
+            }
+            TempData["Login"] = 1;
+            return RedirectToAction(nameof(Login));
+        }
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
             var fujiwaraCarShopContext = _context.Vehicle.Include(v => v.Brand).Include(v => v.Type);
-            return View(await fujiwaraCarShopContext.ToListAsync());
+            return View("~/Views/Admin/Vehicles/Index.cshtml",await fujiwaraCarShopContext.ToListAsync());
         }
 
         // GET: Vehicles/Details/5
@@ -43,7 +53,7 @@ namespace FujiwaraCarShop.Controllers
                 return NotFound();
             }
 
-            return View(vehicle);
+            return View("/Admin/Vehicles",vehicle);
         }
 
         // GET: Vehicles/Create
@@ -51,7 +61,7 @@ namespace FujiwaraCarShop.Controllers
         {
             ViewData["VehicleBrandName"] = new SelectList(_context.VehicleBrand, "Id", "Name");
             ViewData["VehicleTypeName"] = new SelectList(_context.VehicleType, "Id", "Name");
-            return View();
+            return View("~/Views/Admin/Vehicles/Create.cshtml");
         }
 
         // POST: Vehicles/Create
@@ -69,7 +79,7 @@ namespace FujiwaraCarShop.Controllers
             }
             ViewData["VehicleBrandName"] = new SelectList(_context.VehicleBrand, "Id", "Name", vehicle.VehicleBrandId);
             ViewData["VehicleTypeName"] = new SelectList(_context.VehicleType, "Id", "Name", vehicle.VehicleTypeId);
-            return View(vehicle);
+            return View("~/Views/Admin/Vehicles/Create.cshtml",vehicle);
         }
 
         // GET: Vehicles/Edit/5
@@ -85,9 +95,9 @@ namespace FujiwaraCarShop.Controllers
             {
                 return NotFound();
             }
-            ViewData["VehicleBrandId"] = new SelectList(_context.VehicleBrand, "Id", "Id", vehicle.VehicleBrandId);
-            ViewData["VehicleTypeId"] = new SelectList(_context.VehicleType, "Id", "Id", vehicle.VehicleTypeId);
-            return View(vehicle);
+            ViewData["VehicleBrandName"] = new SelectList(_context.VehicleBrand, "Id", "Name", vehicle.VehicleBrandId);
+            ViewData["VehicleTypeName"] = new SelectList(_context.VehicleType, "Id", "Name", vehicle.VehicleTypeId);
+            return View("~/Views/Admin/Vehicles/Edit.cshtml",vehicle);
         }
 
         // POST: Vehicles/Edit/5
@@ -124,7 +134,7 @@ namespace FujiwaraCarShop.Controllers
             }
             ViewData["VehicleBrandName"] = new SelectList(_context.VehicleBrand, "Id", "Name", vehicle.VehicleBrandId);
             ViewData["VehicleTypeName"] = new SelectList(_context.VehicleType, "Id", "Name", vehicle.VehicleTypeId);
-            return View(vehicle);
+            return View("~/Views/Admin/Vehicles/Edit.cshtml",vehicle);
         }
 
         // GET: Vehicles/Delete/5
@@ -144,7 +154,7 @@ namespace FujiwaraCarShop.Controllers
                 return NotFound();
             }
 
-            return View(vehicle);
+            return View("~/Views/Admin/Vehicles/Delete.cshtml",vehicle);
         }
 
         // POST: Vehicles/Delete/5

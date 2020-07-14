@@ -10,6 +10,8 @@ namespace FujiwaraCarShop.Data {
         public DbSet<VehicleBrand> VehicleBrand { get; set; }
         public DbSet<VehicleType> VehicleType { get; set; }
         public DbSet<Vehicle> Vehicle { get; set; }
-        
+
+        public DbSet<User> User { get; set; }
+
     }
 }

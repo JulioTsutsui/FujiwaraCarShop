@@ -1,0 +1,23 @@
+﻿@model User
+@{
+    ViewBag.Title = "Login admin";
+}
+    
+    <form asp-action="Login">
+        @if(TempData["Login"] != null) {
+            <span class="text-danger">Wrong Login and Password!</span>
+        }
+        <div class="form-group">
+            <label asp-for="Login" class="control-label"></label>
+            <input asp-for="Login" class="form-control" />
+            <span asp-validation-for="Login" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="control-label"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Login" class="btn btn-primary" />
+        </div>
+    </form>
