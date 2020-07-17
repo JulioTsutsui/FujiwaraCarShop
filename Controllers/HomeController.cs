@@ -21,6 +21,7 @@ namespace FujiwaraCarShop.Controllers {
 
         public async Task<IActionResult> Index() {
             var fujiwaraCarShopContext = _context.Vehicle.Include(v => v.Brand).Include(v => v.Type);
+            ViewBag.Brands = await _context.VehicleBrand.ToListAsync();
             return View(await fujiwaraCarShopContext.ToListAsync());
         }
 
