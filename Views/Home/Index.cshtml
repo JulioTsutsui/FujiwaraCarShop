@@ -60,10 +60,10 @@
     </div>    
     <div class="container">
         <div class="row">
-            <div class="col-md-3 brands justify-content-between">
+            <div class="col-md-3 brands">
                 <h3>Brands</h3>
                 @foreach (var item in ViewBag.Brands) {
-                    <a href="#" class="btn border shadow-sm px-4 mb-2">
+                    <a asp-action="Brand" asp-route-id="@item.Id" class="btn border shadow-sm px-4 mb-2">
                         <img src="~/img/@item.Name-logo.png" width="70" height="70" alt="@item.Name Logo" />
                     </a>
                 }
@@ -79,12 +79,12 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title">@item.Name</h5>
+                                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
                                     <p class="card-text">car model (description)</p>
-                                    <h4 class="card-text font-weight-bolder text-danger">$ @item.Price.ToString("F2")</h4>
+                                    <h4 class="card-text font-weight-bolder text-danger">@Html.DisplayFor(modelItem => item.Price)</h4>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <p><span class="badge badge-info">@item.Brand.Name</span></p>
+                                            <p><span class="badge badge-info">@Html.DisplayFor(modelItem => item.Brand.Name)</span></p>
                                         </div>
                                         <div class="col-md-6 text-center">
                                             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-danger rounded-0 shadow-sm">More information</a>

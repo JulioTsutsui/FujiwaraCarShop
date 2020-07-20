@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Vehicle>
+@{
+    ViewData["Title"] = ViewBag.Brand.Name;
+}
+    <style>
+        .base {
+            height: 500px;
+            background: linear-gradient(rgba(0, 0, 0,0.7), rgba(0, 0, 0, 0.7)), url("/img/@ViewBag.Brand.Name.ToLower()-bg.jpg");
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
+    <div class="d-flex base justify-content-center align-items-center mb-5">
+        <h1 class="text-white display-1 font-weight-bolder text-uppercase">@ViewBag.Brand.Name</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-md-8 offset-2 ">
+                @foreach (var item in Model) {
+                    <div class="card mb-3">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="~/img/@item.Photo" +".png" class="card-img img-fluid" alt="Car">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                                    <p class="card-text">car model (description)</p>
+                                    <h4 class="card-text font-weight-bolder text-danger">@Html.DisplayFor(modelItem => item.Price)</h4>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><span class="badge badge-info">@Html.DisplayFor(modelItem => item.Brand.Name)</span></p>
+                                        </div>
+                                        <div class="col-md-6 text-center">
+                                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-danger rounded-0 shadow-sm">More information</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>

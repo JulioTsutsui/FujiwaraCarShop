@@ -53,7 +53,7 @@ namespace FujiwaraCarShop.Controllers
                 return NotFound();
             }
 
-            return View("/Admin/Vehicles",vehicle);
+            return View("~/Views/Admin/Vehicles/Details.cshtml",vehicle);
         }
 
         // GET: Vehicles/Create
