@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FujiwaraCarShop.Models;
@@ -37,6 +35,7 @@ namespace FujiwaraCarShop.Controllers {
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vehicle == null) {
                 return NotFound();
+
             }
             return View(vehicle);
         }
@@ -44,23 +43,20 @@ namespace FujiwaraCarShop.Controllers {
         public async Task<IActionResult> Brand(int? id) {
             if(id == null) {
                 return NotFound();
+
             }
             var brand = await _context.VehicleBrand.FirstOrDefaultAsync(model => model.Id == id);
             if(brand == null) {
                 return NotFound();
+                
             }
             ViewBag.Brand = brand;
             var vehicle = _context.Vehicle.Include(v => v.Brand).Include(v => v.Type).Where(model => model.Brand.Id == id);
             return View(vehicle);
         }
 
-        public IActionResult Privacy() {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error() {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        public IActionResult Error(int id) {
+            return View("~/Views/Shared/Error.cshtml", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, StatusCode = id });
         }
     }
 }
