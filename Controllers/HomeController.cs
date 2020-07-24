@@ -35,7 +35,6 @@ namespace FujiwaraCarShop.Controllers {
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vehicle == null) {
                 return NotFound();
-
             }
             return View(vehicle);
         }

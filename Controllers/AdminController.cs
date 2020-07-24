@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FujiwaraCarShop.Data;
 using FujiwaraCarShop.Models;
+using Microsoft.AspNetCore.Http;
+using System;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FujiwaraCarShop.Controllers
 {
@@ -22,16 +25,36 @@ namespace FujiwaraCarShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Login([Bind("Login,Password")] User user) {
-            if (user.Login == "Dacioso" && user.Password == "123") {
+        public async Task<IActionResult> Login([Bind("Login,Password")] User user) {
+            if (await _context.User.AnyAsync(users => users.Login == user.Login && users.Password == user.Password)) {
+                string key = "AUTH_TOKEN_COOKIE";
+                string value = user.ToString();
+                CookieOptions cookieOptions = new CookieOptions();
+                cookieOptions.Expires = DateTime.Now.AddHours(1);
+                Response.Cookies.Append(key, value, cookieOptions);
                 return RedirectToAction(nameof(Index));
             }
             TempData["Login"] = 1;
             return RedirectToAction(nameof(Login));
         }
+        public IActionResult Logout() {
+            if (Request.Cookies["AUTH_TOKEN_COOKIE"] == null) {
+                return BadRequest();
+            }
+            string key = "AUTH_TOKEN_COOKIE";
+            string value = "";
+            CookieOptions cookieOptions = new CookieOptions();
+            cookieOptions.Expires = DateTime.Now.AddHours(-1);
+            Response.Cookies.Append(key, value, cookieOptions);
+            return RedirectToAction("Index", "Home");
+        }
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
+
+            if (Request.Cookies["AUTH_TOKEN_COOKIE"] == null) {
+                return Unauthorized();
+            }
             var fujiwaraCarShopContext = _context.Vehicle.Include(v => v.Brand).Include(v => v.Type);
             return View("~/Views/Admin/Vehicles/Index.cshtml",await fujiwaraCarShopContext.ToListAsync());
         }
@@ -39,6 +62,9 @@ namespace FujiwaraCarShop.Controllers
         // GET: Vehicles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            if (Request.Cookies["AUTH_TOKEN_COOKIE"] == null) {
+                return Unauthorized();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -59,6 +85,9 @@ namespace FujiwaraCarShop.Controllers
         // GET: Vehicles/Create
         public IActionResult Create()
         {
+            if (Request.Cookies["AUTH_TOKEN_COOKIE"] == null) {
+                return Unauthorized();
+            }
             ViewData["VehicleBrandName"] = new SelectList(_context.VehicleBrand, "Id", "Name");
             ViewData["VehicleTypeName"] = new SelectList(_context.VehicleType, "Id", "Name");
             return View("~/Views/Admin/Vehicles/Create.cshtml");
@@ -71,8 +100,12 @@ namespace FujiwaraCarShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Year,Price,VehicleBrandId,VehicleTypeId,Photo")] Vehicle vehicle)
         {
+            if (Request.Cookies["AUTH_TOKEN_COOKIE"] == null) {
+                return Unauthorized();
+            }
             if (ModelState.IsValid)
             {
+
                 _context.Add(vehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -85,6 +118,9 @@ namespace FujiwaraCarShop.Controllers
         // GET: Vehicles/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (Request.Cookies["AUTH_TOKEN_COOKIE"] == null) {
+                return Unauthorized();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -107,6 +143,9 @@ namespace FujiwaraCarShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Year,Price,VehicleBrandId,VehicleTypeId,Photo")] Vehicle vehicle)
         {
+            if (Request.Cookies["AUTH_TOKEN_COOKIE"] == null) {
+                return Unauthorized();
+            }
             if (id != vehicle.Id)
             {
                 return NotFound();
@@ -140,6 +179,9 @@ namespace FujiwaraCarShop.Controllers
         // GET: Vehicles/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (Request.Cookies["AUTH_TOKEN_COOKIE"] == null) {
+                return Unauthorized();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -162,6 +204,9 @@ namespace FujiwaraCarShop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (Request.Cookies["AUTH_TOKEN_COOKIE"] == null) {
+                return Unauthorized();
+            }
             var vehicle = await _context.Vehicle.FindAsync(id);
             _context.Vehicle.Remove(vehicle);
             await _context.SaveChangesAsync();

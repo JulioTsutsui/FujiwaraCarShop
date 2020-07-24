@@ -18,5 +18,9 @@ namespace FujiwaraCarShop.Models {
         [DataType(DataType.Password)]
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
+
+        public override string ToString() {
+            return Login.ToString();
+        }
     }
 }
