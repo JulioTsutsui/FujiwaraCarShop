@@ -12,16 +12,26 @@
             <div class="col-md-5">
                 <img class="w-100" src="~/img/@Model.Photo" alt="@Model.Name car image" />
             </div>
-            <div class="col-md-7 border">
-                <span class="font-weight-bolder h5">Year</span>
-                <p class="lead">@Model.Year</p>
-                <span class="font-weight-bolder h5">Brand</span>
-                <p class="lead">@Model.Brand.Name</p>
-                <span class="font-weight-bolder h5">Type</span>
-                <p class="lead">@Model.Type.Name</p>
-                <span class="font-weight-bolder h5">Price</span>
-                <p class="lead">@Html.DisplayFor(model => model.Price)</p>
-                <button class="btn btn-outline-danger mb-2 rounded-0 px-5">Buy</button>
+            <div class="col-md-7 text-center">
+                <div class="row d-flex justify-content-around h-100 align-items-center">
+                    <div class="col-4 m-2">
+                        <span class="font-weight-bolder h5">Year</span>
+                        <p class="lead">@Model.Year</p>
+                    </div>
+                    <div class="col-4 m-2">
+                        <span class="font-weight-bolder h5">Brand</span>
+                        <p class="lead">@Model.Brand.Name</p>
+                    </div>
+                    <div class="col-4 m-2">
+                        <span class="font-weight-bolder h5">Type</span>
+                        <p class="lead">@Model.Type.Name</p>
+                    </div>
+                    <div class="col-4 m-2">
+                        <span class="font-weight-bolder h5">Price</span>
+                        <p class="lead">@Html.DisplayFor(model => model.Price)</p>
+                    </div>
+                </div>
+                <button class="btn btn-outline-danger rounded-0 px-5">Buy</button>
             </div>
         </div>
     </div>

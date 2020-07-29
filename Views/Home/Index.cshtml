@@ -15,9 +15,9 @@
             </div>
         </div>
     </div>
-    <div class="container mt-3 mb-3">
+    <div class="container my-5">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 mb-4">
                 <div class="card shadow">
                     <div class="card-body text-center">
                         <svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-clock-fill" fill="rgb(0,63,186)" xmlns="http://www.w3.org/2000/svg">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 mb-4">
                 <div class="card shadow">
                     <div class="card-body text-center">
                         <svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-file-earmark-text-fill" fill="rgb(0,63,186)" xmlns="http://www.w3.org/2000/svg">
@@ -62,11 +62,15 @@
         <div class="row">
             <div class="col-md-3 brands">
                 <h3>Brands</h3>
-                @foreach (var item in ViewBag.Brands) {
-                    <a asp-action="Brand" asp-route-id="@item.Id" class="btn border shadow-sm px-4 mb-2">
-                        <img src="~/img/@item.Name-logo.png" width="70" height="70" alt="@item.Name Logo" />
-                    </a>
-                }
+                <div class="row row-cols-2">
+                        @foreach (var item in ViewBag.Brands) {
+                            <div class="col mb-2">
+                                <a asp-action="Brand" asp-route-id="@item.Id" class="btn border shadow-sm w-100 py-2">
+                                    <img src="~/img/@item.Name-logo.png" width="70" height="70" alt="@item.Name Logo" />
+                                </a>
+                            </div>
+                        }
+                </div>
             </div>
             <div class="col-md-9">
                 <h3>Cars</h3>
