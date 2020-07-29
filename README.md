@@ -9,14 +9,16 @@ Front-end: BOOTSTRAP
 
 # Setup
 No arquivo appsettings.json, você vai precisar colocar sua string de conexão ao banco de dados. Lembrando que esse projeto foi feito usando o **SQL Server**.
-´´´c#
+
+```json
 "ConnectionStrings": {
-      "FujiwaraCarShopContext": "[INSIRA SUA STRING DE CONEXÃO AQUI]"
-  }
-´´´
+    "FujiwaraCarShopContext": "[INSIRA SUA STRING DE CONEXÃO AQUI]"
+ }
+```
+
 Após isso, você precisará ir no console e criar uma migration do projeto. Não se preocupe, é só digitar o comando abaixo:
-´´´
+```
 Add-Migration NomeMigration //Sinta-se livre para nomear
-´´´
+```
 
 
