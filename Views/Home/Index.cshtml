@@ -26,7 +26,7 @@
                         <br />
                         <br />
                         <h4 class="card-title font-weight-bolder">Speed</h4>
-                        <p class="lead">This is some text within a card body.</p>
+                        <p class="lead">Fast payment confirmation, just like our cars.</p>
                     </div>
                 </div>
             </div>
@@ -38,8 +38,8 @@
                         </svg>
                         <br />
                         <br />
-                        <h4 class="card-title">Title</h4>
-                        <p>This is some text within a card body.</p>
+                        <h4 class="card-title font-weight-bolder">Documents</h4>
+                        <p class="lead">You only need a few documents. I promise, it won't be that much.</p>
                     </div>
                 </div>
             </div>
@@ -51,8 +51,8 @@
                         </svg>
                         <br />
                         <br />
-                        <h4 class="card-title">Title</h4>
-                        <p>This is some text within a card body.</p>
+                        <h4 class="card-title font-weight-bolder">Parts</h4>
+                        <p class="lead">All parts are properly tested and are working perfectly.</p>
                     </div>
                 </div>
             </div>
@@ -75,12 +75,11 @@
                     <div class="card mb-3">
                         <div class="row no-gutters">
                             <div class="col-md-4">
-                                <img src="~/img/@item.Photo"+".png" class="card-img img-fluid" alt="Car">
+                                <img src="~/img/@item.Photo"+".png" class="card-img img-fluid h-100 rounded-0" alt="Car">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
                                     <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
-                                    <p class="card-text">car model (description)</p>
                                     <h4 class="card-text font-weight-bolder text-danger">@Html.DisplayFor(modelItem => item.Price)</h4>
                                     <div class="row">
                                         <div class="col-md-6">

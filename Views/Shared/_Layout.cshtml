@@ -24,8 +24,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav justify-content-end flex-grow-1">
                             @if (Context.Request.Cookies["AUTH_TOKEN_COOKIE"] != null) {
-                                <li class="nav-item navbar-text">
-                                    <span class="font-weight-bolder text-dark">@Context.Request.Cookies["AUTH_TOKEN_COOKIE"]</span>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Admin" asp-action="Index">
+                                        <span class="font-weight-bolder text-dark">@Context.Request.Cookies["AUTH_TOKEN_COOKIE"]</span>
+                                    </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-danger" asp-controller="Admin" asp-action="Logout">

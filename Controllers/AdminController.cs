@@ -7,7 +7,7 @@ using FujiwaraCarShop.Data;
 using FujiwaraCarShop.Models;
 using Microsoft.AspNetCore.Http;
 using System;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.IO;
 
 namespace FujiwaraCarShop.Controllers
 {
@@ -98,14 +98,22 @@ namespace FujiwaraCarShop.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Year,Price,VehicleBrandId,VehicleTypeId,Photo")] Vehicle vehicle)
+        public async Task<IActionResult> Create(Vehicle vehicle, IFormFile photo)
         {
             if (Request.Cookies["AUTH_TOKEN_COOKIE"] == null) {
                 return Unauthorized();
             }
+
+            if (photo != null && photo.Length > 0) {
+                var fileName = Path.GetFileName(photo.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img", fileName);
+                using (var fileSteam = new FileStream(filePath, FileMode.Create)) {
+                    await photo.CopyToAsync(fileSteam);
+                }
+                vehicle.Photo = fileName;
+            }
             if (ModelState.IsValid)
             {
-
                 _context.Add(vehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
