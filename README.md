@@ -20,5 +20,9 @@ Após isso, você precisará ir no console e criar uma migration do projeto. Nã
 ```
 Add-Migration NomeMigration //Sinta-se livre para nomear
 ```
+Para aplicar a sua migration no banco, só inserir o comando a seguir:
+```
+Update-Database
+```
 
 
